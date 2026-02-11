@@ -10,12 +10,41 @@
         <svg id="timeline_legend"></svg>
         <div class="timeline">
             <div id="timeline" style="width: 100%; " ></div>
-        </div>
-        <div class="title">
-
-        <el-button size="small" round @click="exportTimeline()" class="export-button">
-            Download as PNG<el-icon><Download /></el-icon>
-        </el-button>
+            <div class="downloadBadge">
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Open Data"
+                    description="Open data for this chart."
+                    actionIcon="Confirmation"
+                    actionText="Click for details"
+                    color="rgb(46, 125, 50)"
+                    icon="Confirmation"
+                    @click="openOpenDataTodo()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Download PNG"
+                    description="Download the timeline chart as a PNG image."
+                    actionIcon="Download"
+                    actionText="Click to download"
+                    color="rgb(2, 136, 209)"
+                    icon="Download"
+                    @click="exportTimeline()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Info"
+                    description="Timeline: Hover to see agreement name."
+                    color="rgb(2, 136, 209)"
+                    icon="Interactive"
+                />
+            </div>
         </div>
     </div>
 
@@ -25,6 +54,7 @@
 <script>
 import * as svg from 'save-svg-as-png';
 import * as d3 from "d3";
+import { ElMessageBox } from 'element-plus';
 
 export default ({
     props: ["data", "agtColor", "timespan"],
@@ -32,14 +62,20 @@ export default ({
     data() {
         return {
             legendList: ['other agreements'],
-            processName: ''  
+            processName: ''
         }
-      
+
     },
 
     methods: {
         exportTimeline() {
             svg.saveSvgAsPng(document.querySelector('.timeline svg'), "timeline.png");
+        },
+
+        openOpenDataTodo() {
+            ElMessageBox.alert(`TODO: Open Data action for Timeline.`, 'Open Data', {
+                confirmButtonText: 'OK'
+            })
         },
 
         renderTimelineLegend() {
@@ -98,7 +134,7 @@ export default ({
                 svgElement.removeChild(svgElement.childNodes[0])
             }
             this.renderTimelineLegend()
-       
+
         }
 	}
 })
@@ -109,5 +145,21 @@ export default ({
 .timeline {
     height: 300px;
     background-color: white;
+    position: relative;
+}
+
+.downloadBadge {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    z-index: 10;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.downloadBadgeInner {
+    cursor: pointer;
+    user-select: none;
 }
 </style>

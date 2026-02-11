@@ -5,6 +5,9 @@ import App from './App.vue'
 
 import  router  from "./router";
 
+// Register web components once for the whole app
+import 'badge-lib/wc';
+
 import './assets/main.css'
 import './assets/css/font.css'
 

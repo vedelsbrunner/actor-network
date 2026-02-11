@@ -1,4 +1,35 @@
 <template>
+    <div class="vis-badges-demo">
+      <vis-badge
+        type="roundcirculartext"
+        variant="outlined"
+        size="88"
+        ringText="Lorem ipsum"
+        label="Lorem ipsum"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        color="rgb(2, 136, 209)"
+        icon="Info"
+      />
+
+      <vis-badge
+        type="mono"
+        variant="outlined"
+        label="Lorem ipsum"
+        description="Lorem ipsum dolor sit amet."
+        color="rgb(46, 125, 50)"
+        icon="Confirmation"
+      />
+
+      <vis-badge
+        type="mini"
+        variant="outlined"
+        label="Lorem ipsum"
+        description="Lorem ipsum dolor sit amet."
+        color="rgb(237, 108, 2)"
+        icon="Warning"
+      />
+    </div>
+
     <div class="dropdown-container">
       <scrollystory :country="country" class="left-align"/>
       <el-dropdown @command="navigateToCountry">
@@ -59,6 +90,16 @@
   </div>
 
 </template>
+
+<style scoped>
+  .vis-badges-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+    padding: 10px 0 6px 0;
+  }
+</style>
 
 <script>
 

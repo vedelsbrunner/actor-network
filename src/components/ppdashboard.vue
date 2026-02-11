@@ -37,8 +37,8 @@
                 </div>
                 <!-- <el-affix :offset="0"> -->
                     <div class="legend-box">
-                    <legends 
-                        :actorTypeLegendList="actorTypeLegendList" 
+                    <legends
+                        :actorTypeLegendList="actorTypeLegendList"
                         :colorRange="colorRange"
                         :sigColorRange="sigColorRange"
                         :agtColor="agtColor"/>
@@ -56,12 +56,53 @@
                 </p>
             </div>
             <div id="network" style="width: 100%;"></div>
-            <div class="title button-display" style="position: absolute; bottom: 0px; z-index: 10;">
-                <el-button round size="small" @click="clickNetwork()">Expand to Full View</el-button>
-                <el-button round size="small" @click="exportNetwork()" class="export-button">
-                    Download as PNG<el-icon><Download /></el-icon>
-                </el-button>
             </div>
+            <div class="downloadBadge">
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Open Data"
+                    description="Open data for this chart."
+                    actionIcon="Confirmation"
+                    actionText="Click for details"
+                    color="rgb(46, 125, 50)"
+                    icon="Confirmation"
+                    @click="openOpenDataTodo('Network')"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Download PNG"
+                    description="Download the network view as a PNG image."
+                    actionIcon="Download"
+                    actionText="Click to download"
+                    color="rgb(2, 136, 209)"
+                    icon="Download"
+                    @click="exportNetwork()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Expand"
+                    description="Open the network view in full screen."
+                    actionIcon="Expand"
+                    actionText="Click to expand"
+                    color="rgb(2, 136, 209)"
+                    icon="Expand"
+                    @click="clickNetwork()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Info"
+                    description="Network: Hover nodes for more information. Click a node to show related nodes."
+                    color="rgb(2, 136, 209)"
+                    icon="Interactive"
+                />
             </div>
             <el-dialog
                 align-center
@@ -71,13 +112,13 @@
                 class="my-network-dialog"
                 >
                 <network
-                    ref="network" 
-                    :title="this.title" 
-                    :actorList="this.actorList" 
+                    ref="network"
+                    :title="this.title"
+                    :actorList="this.actorList"
                     :agreementList="this.agreementList"
                     :actorTypeLegendListNetwork="actorTypeLegendListNetwork"
                     :colorRangeNetwork="colorRangeNetwork"
-                    :actorTypeLegendList="actorTypeLegendList" 
+                    :actorTypeLegendList="actorTypeLegendList"
                     :colorRange="colorRange"
                     :sigColorRange="sigColorRange"
                     :agtColor="agtColor"
@@ -98,12 +139,53 @@
                 </div>
                 <div id="list" style=" width:100%;"></div>
             </div>
-            <div class="title button-display" style="position: absolute; bottom: 0px; z-index: 10;">
-                <el-button round size="small" @click="clickList()">Expand to Full View</el-button>
-                <el-button round size="small" @click="exportList()" class="export-button">
-                    Download as PNG<el-icon><Download /></el-icon>
-                </el-button>
-                </div>
+            <div class="downloadBadge">
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Open Data"
+                    description="Open data for this chart."
+                    actionIcon="Confirmation"
+                    actionText="Click for details"
+                    color="rgb(46, 125, 50)"
+                    icon="Confirmation"
+                    @click="openOpenDataTodo('List')"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Download PNG"
+                    description="Download the list view as a PNG image."
+                    actionIcon="Download"
+                    actionText="Click to download"
+                    color="rgb(2, 136, 209)"
+                    icon="Download"
+                    @click="exportList()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Expand"
+                    description="Open the list view in full screen."
+                    actionIcon="Expand"
+                    actionText="Click to expand"
+                    color="rgb(2, 136, 209)"
+                    icon="Expand"
+                    @click="clickList()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Info"
+                    description="List: Scroll to browse agreements and actors. Hover items for details."
+                    color="rgb(2, 136, 209)"
+                    icon="Interactive"
+                />
+            </div>
 
             <el-dialog
             align-center
@@ -112,11 +194,11 @@
             class="dialog-width"
             >
             <list
-                ref="list" 
+                ref="list"
                 :title="this.title"
                 :agtNum="agtNum"
                 :maxNum="maxNum"
-                :actorTypeLegendList="actorTypeLegendList" 
+                :actorTypeLegendList="actorTypeLegendList"
                 :colorRange="colorRange"
                 :sigColorRange="sigColorRange"
                 :agtColor="agtColor"
@@ -137,13 +219,54 @@
             </div>
             <div id="jigsaw" style="width: 100%;" ></div>
             </div>
-            <div class="title button-display" style="position: absolute; bottom: 0px; z-index: 10;">
-                <el-button round size="small" @click="clickJigsaw()">Expand to Full View</el-button>
-                <el-button round size="small" @click="exportJigsaw()" class="export-button">
-                    Download as PNG<el-icon><Download /></el-icon>
-                </el-button>
-                </div>
-            
+            <div class="downloadBadge">
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Open Data"
+                    description="Open data for this chart."
+                    actionIcon="Confirmation"
+                    actionText="Click for details"
+                    color="rgb(46, 125, 50)"
+                    icon="Confirmation"
+                    @click="openOpenDataTodo('Jigsaw')"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Download PNG"
+                    description="Download the jigsaw view as a PNG image."
+                    actionIcon="Download"
+                    actionText="Click to download"
+                    color="rgb(2, 136, 209)"
+                    icon="Download"
+                    @click="exportJigsaw()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Expand"
+                    description="Open the jigsaw view in full screen."
+                    actionIcon="Expand"
+                    actionText="Click to expand"
+                    color="rgb(2, 136, 209)"
+                    icon="Expand"
+                    @click="clickJigsaw()"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    type="mini"
+                    variant="filled"
+                    label="Info"
+                    description="Jigsaw: Scroll to explore. Hover items for details."
+                    color="rgb(2, 136, 209)"
+                    icon="Interactive"
+                />
+            </div>
+
             <el-dialog
             align-center
             v-model="jigsawVisible"
@@ -151,11 +274,11 @@
             class="jigsaw-dialog-width"
             >
             <jigsaw
-                ref="jigsaw" 
+                ref="jigsaw"
                 :title="this.title"
                 :actorTypeLegendListNetwork="actorTypeLegendListNetwork"
                 :colorRangeNetwork="colorRangeNetwork"
-                :actorTypeLegendList="actorTypeLegendList" 
+                :actorTypeLegendList="actorTypeLegendList"
                 :colorRange="colorRange"
                 :sigColorRange="sigColorRange"
                 :agtColor="agtColor"
@@ -165,13 +288,14 @@
 
         </div>
     </div>
-    
+
 
 </template>
 
 <script>
 import legends from '@/components/legends.vue'
 import * as svg from 'save-svg-as-png'
+import { ElMessageBox } from 'element-plus'
 
 import network from '../components/network.vue'
 import jigsaw from '../components/jigsaw.vue'
@@ -224,13 +348,20 @@ export default {
         exportNetwork() {
             svg.saveSvgAsPng(document.querySelector('.network svg'), "network.png");
         },
-            
+
         exportList() {
             svg.saveSvgAsPng(document.querySelector('.list svg'), "list.png");
         },
 
         exportJigsaw() {
             svg.saveSvgAsPng(document.querySelector('.jigsaw svg'), "jigsaw.png");
+        }
+        ,
+
+        openOpenDataTodo(where) {
+            ElMessageBox.alert(`TODO: Open Data action for ${where}.`, 'Open Data', {
+                confirmButtonText: 'OK'
+            })
         }
     },
 
@@ -254,3 +385,26 @@ export default {
 }
 
 </script>
+
+<style scoped>
+    .network,
+    .list,
+    .jigsaw {
+        position: relative;
+    }
+
+    .downloadBadge {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+    }
+
+    .downloadBadgeInner {
+        cursor: pointer;
+        user-select: none;
+    }
+</style>
