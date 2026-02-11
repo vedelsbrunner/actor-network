@@ -2,7 +2,7 @@ name: Deploy actor-network to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [master, main]
   workflow_dispatch:
 
 permissions:
@@ -33,6 +33,11 @@ jobs:
           # Hosted web component bundle from badge-lib GitHub Pages:
           VUE_APP_VIS_BADGE_WC_URL: "https://vedelsbrunner.github.io/badge-lib/dist-wc/vis-badge.js"
         run: npm run build
+
+      - name: Sanity check Pages output
+        run: |
+          test -f dist/index.html
+          touch dist/.nojekyll
 
       - name: Deploy dist/ to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
