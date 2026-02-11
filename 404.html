@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redirecting…</title>
+    <script>
+      // SPA fallback for GitHub Pages (Vue Router history mode).
+      // This redirects unknown paths (e.g. /actor-network/country/RUS)
+      // back to the app entrypoint with an encoded path parameter.
+      (function () {
+        var base = '/actor-network/';
+        var loc = window.location;
+        var fullPath = loc.pathname + loc.search + loc.hash;
+
+        // If somehow not under the repo base, just go to the base.
+        if (fullPath.indexOf(base) !== 0) {
+          loc.replace(base);
+          return;
+        }
+
+        var relative = fullPath.slice(base.length); // no leading slash
+        loc.replace(base + '?p=' + encodeURIComponent(relative));
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
