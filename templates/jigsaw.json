@@ -1,0 +1,259 @@
+{
+    "width": "[autoWidth]",
+    "height": "[autoHeight]",
+    "x": 170,
+
+    
+    "data": [
+        {
+            "name": "data",
+            "url": "[fileUrl]",
+            "transform": [
+                {"type": "addIndex","as": "id"}
+            ]
+        }
+    ],
+
+    "parameters": [
+        {
+            "name": "selected_node",
+            "action": "replace",
+            "network": "network",
+            "type": "selection",
+            "clearOnBackgroundClick": true
+        },
+        {
+            "name": "outlinks",
+            "source": "selected_node",
+            "network": "network",
+            "transform": [
+            {"type": "connectedEdges"}
+        ]
+        },
+        {
+            "name": "neighbours",
+            "source": "selected_node",
+            "transform": [
+                { "type": "neighbours", "direction": "both" }
+            ]
+            }
+    ],
+
+    "networks": [
+        {
+            "name": "network",
+            "parts": [
+                {"data": "data",
+                    "yieldsLinks": [
+                        {"source_id": {"field": "Agt"},
+                         "source_node_type": "node",
+                         "source_id_field": "id",
+                         "target_id": {"field": "actor_name"},
+                         "target_node_type": "node",
+                         "target_id_field": "id",
+                         "data": [ "*"]
+                        }
+                    ],
+                    "yieldsNodes": [
+                        {"id_field": "Agt",
+                        "type": "node",
+                        "data": [{"field": "Type","as": "node_type"},
+                                {"field": "Type", "as": "node_type_color"},
+                                {"field": "short_agt_name","as": "name"},
+                                {"field": "Agt","as": "fullName"},
+                                {"field": "PPName","as": "Peace"},
+                                {"field": "date", "as": "node_time"},
+                                {"field": "year", "as": "year"}]},
+                                
+                        {"id_field": "actor_name",
+                        "type": "node",
+                        "data": [{"field": "target_type","as": "node_type"},
+                                {"field": "actor_type", "as": "node_type_color"},
+                                {"field": "actor_name","as": "name"}
+                                ]}
+                    ]
+                }
+            ],
+            "transform": [
+                {"type": "filterEdges", "expression": "datum.source.data.Peace == [peaceProcess]"},
+                {"type": "removeIsolated"}
+            ]
+        }
+    ],
+
+    "orderings": [
+        {
+            "name": "entity_groups",
+            "orderBy": {
+                "field": "data.node_type_color",
+                "direction": "descending"
+            },
+            "data": "network.nodes"
+        },
+        {
+            "name": "agreement_time",
+            "orderBy": {
+                "field": "data.node_time"
+            },
+            "data": "network.nodes"
+        }
+    ],
+
+    "layouts": [
+        {
+            "name": "layout",
+            "network": "network",
+            "type": "d3-force"
+        },
+        {
+            "name": "jigsaw",
+            "pattern": "cartesian",
+            "x": [
+                {
+                    "scale": "axis",
+                    "field": "data.node_type"
+                }
+            ],
+            "y": [
+                {
+                    "order": "entity_groups",
+                    "order": "agreement_time"
+                }
+            ],
+            "data": "network.nodes",
+            "width":0.1,
+            "positioning": "distribute"
+        }
+    ],
+
+    "scales": [
+        {
+            "name": "axis",
+            "type": "ordinal",
+            "domain": [
+                "Peace Agreement",
+                "signatory"
+            ],
+            "range": [
+                0,
+                1
+            ]
+        },
+        {
+            "name": "nodeColor",
+            "type": "ordinal",
+            "range": "[colorRange]",
+            "domain": "[actorTypeLegendList]"
+        },
+        {
+            "name": "edgeColor",
+            "type": "ordinal",
+            "range": "[sigColorRange]",
+            "domain": ["party","third party"]
+        },
+        {
+            "name": "edgeWidth",
+            "type": "ordinal",
+            "range": [0.7,0.7],
+            "domain": ["party","third party"]
+        },
+        {
+            "name": "shape",
+            "type": "ordinal",
+            "domain": [
+                "Peace Agreement",
+                "signatory",
+                "Peace Process"
+            ],
+            "range": [
+                "square",
+                "circle",
+                "triangle"
+            ]
+        }
+    ],
+
+    "vis": [
+        {
+            "entries": "network.links",
+            "layout": "jigsaw",
+            "mark": {
+                "type": "linkpath",
+                "start": "source",
+                "end": "target",
+                "strokeWidth": {"field":"data.signatory_type", "scale":"edgeWidth"},
+                "stroke": {"field":"data.signatory_type", "scale":"edgeColor"},
+                "opacity": {
+                    "conditions": [
+                        {"inSelection": "outlinks.links","value": 1},
+                        {"selectionIsEmpty": "outlinks.links","value": 1}
+                        ],
+                   "value": 0.5
+                 }
+            }
+        },
+        {
+            "entries": "network.links",
+            "layout": "jigsaw",
+            "ifInSelection": "outlinks.links",
+            "mark": {
+                "type": "linkpath",
+                "start": "source",
+                "end": "target",
+                "stroke": {"field":"data.signatory_type", "scale":"edgeColor"},
+                "strokeWidth": 1.7
+            }
+        },
+        {
+            "entries": "network.nodes",
+            "layout": "jigsaw",
+            "actions": [
+                {
+                "interaction": "select",
+                "using": "cursor",
+                "event": "click",
+                "action": "replace",
+                "selection": "selected_node"
+                }
+            ],
+            "mark": {
+                "type": "symbol",
+                "shape": {"field": "data.node_type", "scale": "shape"},
+                "area": { "expression": "datum.data.node_type == 'Peace Agreement' ? 400 : 250"},
+                "fill": {
+                    "field": "data.node_type_color",
+                    "scale": "nodeColor"
+                },
+                "stroke": "black",
+                "strokeWidth": {"expression": "datum.data.name == [country] ? 2 : 0"},
+                "tooltip": {
+                    "expression": "datum.data.node_type == 'Peace Agreement' ? {Name: datum.data.fullName, Date: datum.data.node_time} : {Name: datum.id}"
+                },
+                "opacity": {
+                    "conditions": [
+                        {"inSelection": "selected_node.nodes","value": 1},
+                        {"inSelection": "neighbours.nodes","value": 1},
+                        {"selectionIsEmpty": "selected_node.nodes","value": 1}
+                        ],
+                   "value": 0.2
+                 }
+            }
+        },
+        {
+            "entries": "network.nodes",
+            "layout": "jigsaw",
+            "mark": {
+                "type": "text",
+                "text": {"field": "id"},
+                "fill": "black",
+                "fontSize":14,
+                "limit": 150,
+                "align": {"expression": "datum.data.node_type_color == 'Peace Agreement' ? 'right' : 'left'"},
+                "dx": {"expression": "datum.data.node_type_color == 'Peace Agreement' ? -15 : 10"},
+                "dy": 2,
+                "tooltip": {"field": "id"}
+            }
+        }
+    ]
+
+}

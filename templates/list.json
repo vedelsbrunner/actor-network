@@ -1,0 +1,167 @@
+{
+    "width": "[autoWidth]",
+    "height": "[autoHeight]",
+    "x": 150,
+    "y": 10,
+
+    "data": [
+        {
+            "name": "data",
+            "url": "[fileUrl]",
+            "transform": [
+                {"type": "addIndex","as": "id"}
+            ]
+        }
+    ],
+    
+    "networks": [
+        {
+            "name": "network",
+            "parts": [
+                {"data": "data",
+                    "yieldsLinks": [
+                        {"source_id": {"field": "Agt"},
+                         "source_node_type": "node",
+                         "source_id_field": "id",
+                         "target_id": {"field": "actor_name"},
+                         "target_node_type": "node",
+                         "target_id_field": "id",
+                         "data": [ "*"]
+                        }
+                    ],
+                    "yieldsNodes": [
+                        {"id_field": "Agt",
+                        "type": "node",
+                        "data": [{"field": "Type","as": "node_type"},
+                                {"field": "Type", "as": "node_type_color"},
+                                {"field": "short_agt_name","as": "name"},
+                                {"field": "Agt","as": "fullName"},
+                                {"field": "PPName","as": "Peace"},
+                                {"field": "date", "as": "node_time"},
+                                {"field": "year", "as": "year"}]},
+                                
+                        {"id_field": "actor_name",
+                        "type": "node",
+                        "data": [{"field": "target_type","as": "node_type"},
+                                {"field": "actor_type", "as": "node_type_color"},
+                                {"field": "actor_name","as": "name"}
+                                ]}
+                    ]
+                }
+            ],
+            "transform": [
+                {"type": "filterEdges", "expression": "datum.source.data.Peace == [peaceProcess]"},
+                {"type": "removeIsolated"}
+            ]
+        }
+    ],
+
+    "groupings": [
+        {
+            "name": "groupedBySource",
+            "data": "network.links",
+            "common": [
+                "source.id"
+            ]
+        }
+    ],
+
+    "orderings": [
+        {
+            "name": "order",
+            "data": "groupedBySource",
+            "orderBy": {
+                "field": "data[0].source.data.node_time",
+                "direction": "ascending"
+            }
+        }
+    ],
+
+    "layouts": [
+        {
+            "name": "list",
+            "data": "groupedBySource",
+            "pattern": "cartesian",
+            "y": [ {"scale": "yScale", "field": "id"} ],
+            "x": [ {"value": 0} ],
+            "positioning": "end"
+        }
+    ],
+
+    "scales": [
+        {
+            "name": "nodeColor",
+            "type": "ordinal",
+            "range": "[colorRange]",
+            "domain": "[actorTypeLegendList]"
+        },
+        {
+            "name": "yScale",
+            "type": "linear",
+            "range": [0, 10],
+            "domain": [0, 30]
+        }
+    ],
+
+    "vis": [
+        {
+            "entries": "groupedBySource",
+            "layout": "list",
+            "mark": {
+                "type": "text",
+                "text": {"field": "data[0].source.data.fullName"},
+                "x": -10,
+                "dy": 3,
+                "fontSize":12,
+                "limit": 140,
+                "lineHeight": 10,
+                "fill": "black",
+                "align": "right",
+                "tooltip": {"expression": "datum.data[0].source.data.fullName"}
+            }
+        },
+        {
+            "entries": "groupedBySource",
+            "layout": "list",
+            "orderings": [
+                {
+                "name": "order_by_id",
+                "data": "entry.data",
+                "orderBy": [ {  "field": "target.data.node_type_color"  }  ]
+                }
+            ],
+
+            "layouts": [
+                {
+                "name": "list2",
+                "data": "entry.data",
+                "pattern": "row-by-row",
+                "numCols": 16,
+                "order": { "order": "order_by_id"  }
+                }
+            ],
+
+            "vis": [
+                {
+                "entries": "entry.data",
+                "layout": "list2",
+                "mark": {
+                        "type": "circle",
+                        "fill": {
+                            "field": "target.data.node_type_color",
+                            "scale": "nodeColor"
+                        },
+                        "stroke": {"expression": "datum.target.id == [country] ? 'black' : 'white'"},
+                        "strokeWidth": 2.5,
+                        "area": 320,
+                        "tooltip": {"expression": "datum.target.data.name"} 
+                    }
+                }
+            ]
+            
+        }
+    ]
+
+
+   
+}

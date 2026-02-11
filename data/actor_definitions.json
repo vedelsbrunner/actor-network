@@ -1,0 +1,42 @@
+[
+ {
+   "Actor Type Label": "Country/State",
+   "Definition": "Internationally recognised Country/State. Refers to any instances where it is the country name, or the government of the state representing the country. Eg. Leaders of the country/state or ministers that represent the country. "
+ },
+ {
+   "Actor Type Label": "Entity",
+   "Definition": "Representatives of entities which are not an internationally recognised country/state eg. Kurdistan, Palestine. Also includes areas with representatives that are not internationally recognised independently of their country/state. Eg. Bougainville, Abkhazia, Puntland, Donestk People's Republic. "
+ },
+ {
+   "Actor Type Label": "Military",
+   "Definition": "In cases where the state army/military was distinguished from the country/state name, they are labelled with the country/state army/military name. Particularly important in cases where military acts as its own entity, and signs separately to the state."
+ },
+ {
+   "Actor Type Label": "IGO",
+   "Definition": "Intergovernmental Organizations. Actors are labelled with this in instances where they appear in Correlates of War (IGO v3), ICEWS Actor Dictionary or the International Governmental Organization Data (v2.1). The shared definition of IGO across these datasets, is international organisations, that have at least 3 nation-states as their members. Also includes any United Nations Peacekeeping Missions, or Special Political Missions."
+ },
+ {
+   "Actor Type Label": "NGO",
+   "Definition": "Non-governmental Organization. An organisation formed independently from any governments. "
+ },
+ {
+   "Actor Type Label": "Armed Organization",
+   "Definition": "Labelled as armed group if appears in: UCDP, ACLED or 'Rebel Group Abbreviations', is referred to as an armed organization/conflict party in the peace agreement context, or is a political organization with an armed wing (mixed groups)."
+ },
+ {
+   "Actor Type Label": "Political Party",
+   "Definition": "If the actor has had a candidate contest in an election for government, or hold a seat in government, on behalf of the shared ideologies of the political group, they are provided with this label. If appear in PoliticalpartyDB, Global Party Survey they are labelled as Political Party. "
+ },
+ {
+   "Actor Type Label": "State Coalition",
+   "Definition": "Where country/states act through a coalition, usually designated for a specific purpose or scenario. Intergovernmental groups/coalitions that do not fit the typical 'official' IGO definitions. Includes 'Group of Friends of UNSG', 'Troika Countries', 'Group of 8'."
+ },
+ {
+   "Actor Type Label": "Umbrella",
+   "Definition": "Umbrella groups/alliances of groups who formally act/coordinate through the umbrella group as a unified front. Can be political or military alliance. Eg. CGSB - Simón Bolívar Guerrilla Coordinating Board - an umbrella group of six armed groups in Colombia. "
+ },
+ {
+   "Actor Type Label": "Other",
+   "Definition": "An actor that does not fit into any of the above definitions of actor types. Can include committees, centres, organisations, council’s, commissions, tribes, or other groups."
+ }
+]

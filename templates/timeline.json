@@ -1,0 +1,229 @@
+{
+    "width": "[autoWidth]",
+    "height": "[autoHeight]",
+  
+  "data": [
+    {
+      "name": "data",
+      "url": "[fileUrl]",
+        "transform": [
+            {"type": "addIndex","as": "id"}
+        ]
+    },
+    {
+        "name": "yearArr",
+        "values": "[timespanArr]",
+        "transform": [
+                {"type": "addIndex","as": "id"}
+            ]
+    }
+    ],
+
+    "parameters": [
+        {
+            "name": "selected_node",
+            "action": "replace",
+            "network": "network",
+            "type": "selection",
+            "clearOnBackgroundClick": true
+        }
+    ],
+
+  "networks": [
+      {
+          "name": "network",
+          "parts": [
+            {"data": "data",
+                "yieldsLinks": [
+                    {"source_id": {"field": "Agt"},
+                     "source_node_type": "node",
+                     "source_id_field": "id",
+                     "target_id": {"field": "actor_name"},
+                     "target_node_type": "node",
+                     "target_id_field": "id",
+                     "data": [ "*"]
+                    }
+                ],
+                "yieldsNodes": [
+                    {"id_field": "Agt",
+                    "type": "node",
+                    "data": [{"field": "Type","as": "node_type"},
+                            {"field": "Type", "as": "node_type_color"},
+                            {"field": "short_agt_name","as": "name"},
+                            {"field": "Agt","as": "fullName"},
+                            {"field": "PPName","as": "Peace"},
+                            {"field": "date", "as": "node_time"},
+                            {"field": "year", "as": "year"}]},
+                            
+                    {"id_field": "actor_name",
+                    "type": "node",
+                    "data": [{"field": "target_type","as": "node_type"},
+                            {"field": "actor_type", "as": "node_type_color"},
+                            {"field": "actor_name","as": "name"}
+                            ]}
+                ]
+            }
+            ],
+          "transform": [
+              {"type": "filterNodes", "expression": "datum.data.node_type == 'Peace Agreement'"},
+              {
+                  "type": "calculate", 
+                  "for": "nodes", 
+                  "as": "date", 
+                  "calculate": "utcParse(datum.data.node_time, '%d/%m/%Y')" 
+                  },
+                  {
+                    "type":"calculate", 
+                    "calculate": "datum.data.year", 
+                    "as": "year"}
+          ]}],
+  
+  "scales": [
+      {
+          "name": "time",
+          "type": "time",
+          "range": [0, 1500],
+          "domain": [653097600000, 1637884800000]
+      },
+      {
+          "name": "year",
+          "type": "linear",
+          "range": [0, 1500],
+          "domain": [1990, 2022]
+      },
+      {
+        "name": "fixed",
+        "type": "linear",
+        "range": [150, 150],
+        "domain": [1990, 2022]
+      }
+      
+  ],
+
+
+  "orderings": [
+    {
+      "name": "order",
+      "data": "network.nodes",
+      "orderBy": { "field": "date", "direction": "ascending" }
+    }
+    ],
+
+
+  "groupings": [
+      {
+          "name": "years",
+          "common": ["year"],
+          "data": "network.nodes"
+      }
+  ],
+
+  "layouts": [
+    {
+        "name": "layout-yearArr",
+        "data": "yearArr",
+        "pattern": "cartesian",
+        "x": [
+            {"scale": "year", "field": "year"}
+        ]
+    },
+    {
+        "name": "l",
+        "network": "network",
+        "pattern": "cartesian",
+        "x": [{"field": "date", "scale": "time"}],
+        "transform": [
+            {"type": "set", "field": "width", "value": 2},
+            {"type": "set", "field": "height", "value": "[countryTimeline]"},
+            {"type": "beeswarm", "gravityY": 0}
+        ]
+    }
+  ],
+
+  "vis": [
+    {
+        "entries": "yearArr",
+        "layout": "layout-yearArr",
+        "mark": {
+            "type": "rect",
+            "fill": { "expression": "datum.year % 2 == 0 ? 'black' : 'white'"},
+            "opacity": 0.02,
+            "width": "[barWidth]",
+            "height": "[autoHeight]"
+        }
+    },
+    {
+        "entries": "yearArr",
+        "layout": "layout-yearArr",
+        "mark": {
+            "type": "text",
+            "fill": "gray",
+            "text": {"expression": "datum.year % 2 == 0 ? datum.year : ''"},
+            "fontSize": 13,
+            "dx": 0,
+            "dy": 235
+        }
+    },
+    {
+        "entries": "network.nodes",
+        "layout": "l",
+        "actions": [
+            {
+            "interaction": "select",
+            "using": "cursor",
+            "event": "mouseover",
+            "action": "replace",
+            "selection": "selected_node"
+            }
+        ],
+        "mark": {
+            "type": "square",
+            "area": 150,
+            "fill": { "expression": "datum.data.Peace == [peaceProcess] ? '[agtColor]' : '#D9D9D9'"},
+            "tooltip": {"expression": "{ Name: datum.data.fullName, Date: datum.data.node_time}"  }
+        }
+    },
+    {
+        "entries": "network.nodes",
+        "layout": "l",
+        "ifInSelection": "selected_node.nodes",
+        "mark": {
+            "type": "square",
+            "area": 220,
+            "fill": "#7FB0E0"
+        }
+    },
+    {
+        "entries": "network.nodes",
+        "layout": "l",
+        "ifInSelection": "selected_node.nodes",
+        "mark": {
+            "type": "text",
+            "text": {"field": "id"},
+            "fontSize": 14,
+            "fontWeight": 800,
+            "limit": 300,
+            "align": "left",
+            "fill": "white",
+            "dx": 10,
+            "dy":3
+            }
+    },
+    {
+        "entries": "network.nodes",
+        "layout": "l",
+        "ifInSelection": "selected_node.nodes",
+        "mark": {
+            "type": "text",
+            "text": {"field": "id"},
+            "fontSize": 14,
+            "fontWeight": 500,
+            "limit": 300,
+            "align": "left",
+            "fill": "black",
+            "dx": 10,
+            "dy":3
+            }
+    }
+  ]
+}
