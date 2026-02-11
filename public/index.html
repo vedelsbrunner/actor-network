@@ -4,6 +4,28 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script>
+      // GitHub Pages SPA deep-link support (Vue Router history mode).
+      // `public/404.html` redirects /<base>/<path> -> /<base>/?p=<path>.
+      // Here we restore the intended path before the app boots.
+      (function () {
+        var params;
+        try {
+          params = new URLSearchParams(window.location.search);
+        } catch (e) {
+          return;
+        }
+        var p = params.get('p');
+        if (!p) return;
+        try {
+          p = decodeURIComponent(p);
+        } catch (e) {}
+        // Normalize: remove any leading slashes
+        p = p.replace(/^\/+/, '');
+        var base = '<%= BASE_URL %>';
+        window.history.replaceState(null, '', base + p);
+      })();
+    </script>
     <script src="<%= BASE_URL %>bundle.js"></script>
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>

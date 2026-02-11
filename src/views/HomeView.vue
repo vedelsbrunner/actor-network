@@ -245,7 +245,7 @@
 
       navigateToCountry(countryAbbr) {
         if (countryAbbr) {
-          // Use the router so GitHub Pages hash mode works (no full page reload).
+          // Use the router (no full page reload).
           this.$router.push({ path: `/country/${countryAbbr}` });
           // console.log(`..${__webpack_public_path__}country/${countryAbbr}`)
         }
