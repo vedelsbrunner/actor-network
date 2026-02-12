@@ -13,36 +13,17 @@
             <div class="downloadBadge">
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Open Data"
-                    description="Open data for this chart."
-                    actionIcon="Confirmation"
-                    actionText="Click for details"
-                    color="rgb(46, 125, 50)"
-                    icon="Confirmation"
+                    v-bind="BADGES.openDataMini"
                     @click="openOpenDataTodo()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Download PNG"
-                    description="Download the timeline chart as a PNG image."
-                    actionIcon="Download"
-                    actionText="Click to download"
-                    color="rgb(2, 136, 209)"
-                    icon="Download"
+                    v-bind="BADGES.downloadPngTimeline"
                     @click="exportTimeline()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Info"
-                    description="Timeline: Hover to see agreement name."
-                    color="rgb(2, 136, 209)"
-                    icon="Interactive"
+                    v-bind="BADGES.infoTimeline"
                 />
             </div>
         </div>
@@ -55,6 +36,7 @@
 import * as svg from 'save-svg-as-png';
 import * as d3 from "d3";
 import { ElMessageBox } from 'element-plus';
+import { BADGES } from '@/badges'
 
 export default ({
     props: ["data", "agtColor", "timespan"],
@@ -62,7 +44,8 @@ export default ({
     data() {
         return {
             legendList: ['other agreements'],
-            processName: ''
+            processName: '',
+            BADGES
         }
 
     },
@@ -151,7 +134,7 @@ export default ({
 .downloadBadge {
     position: absolute;
     right: 10px;
-    bottom: 10px;
+    bottom: 2px;
     z-index: 10;
     display: inline-flex;
     align-items: center;

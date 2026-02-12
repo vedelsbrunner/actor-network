@@ -1,35 +1,4 @@
 <template>
-    <div class="vis-badges-demo">
-      <vis-badge
-        type="roundcirculartext"
-        variant="outlined"
-        size="88"
-        ringText="Lorem ipsum"
-        label="Lorem ipsum"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-        color="rgb(2, 136, 209)"
-        icon="Info"
-      />
-
-      <vis-badge
-        type="mono"
-        variant="outlined"
-        label="Lorem ipsum"
-        description="Lorem ipsum dolor sit amet."
-        color="rgb(46, 125, 50)"
-        icon="Confirmation"
-      />
-
-      <vis-badge
-        type="mini"
-        variant="outlined"
-        label="Lorem ipsum"
-        description="Lorem ipsum dolor sit amet."
-        color="rgb(237, 108, 2)"
-        icon="Warning"
-      />
-    </div>
-
     <div class="dropdown-container">
       <scrollystory :country="country" class="left-align"/>
       <el-dropdown @command="navigateToCountry">
@@ -45,7 +14,7 @@
         </template>
       </el-dropdown>
     </div>
-  
+
     <div class="top-layout">
     <el-container>
       <el-aside class="top-side">
@@ -53,11 +22,11 @@
         <peaceprocess
           :country="country"
           :dataPath="dataPath"
-          :countryData="countryData" 
-          v-on:sendData="getData" 
-          :ppArr="ppArr" 
+          :countryData="countryData"
+          v-on:sendData="getData"
+          :ppArr="ppArr"
           :timespanArr="timespanArr"
-          :actorTypeLegendList="actorTypeLegendList" 
+          :actorTypeLegendList="actorTypeLegendList"
           :colorRange="colorRange"
           :actorTypeLegendListNetwork="actorTypeLegendListNetwork"
           :colorRangeNetwork="colorRangeNetwork"
@@ -76,11 +45,11 @@
   </div>
 
   <div class="process-layout">
-    <ppdashbord 
+    <ppdashbord
       :country="country"
       :dataPath="dataPath"
       :data="data"
-      :actorTypeLegendList="actorTypeLegendList" 
+      :actorTypeLegendList="actorTypeLegendList"
       :colorRange="colorRange"
       :actorTypeLegendListNetwork="actorTypeLegendListNetwork"
       :colorRangeNetwork="colorRangeNetwork"
@@ -92,12 +61,17 @@
 </template>
 
 <style scoped>
-  .vis-badges-demo {
+  .dropdown-container {
     display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
     align-items: center;
-    padding: 10px 0 6px 0;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .dropdown-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
   }
 </style>
 
@@ -138,7 +112,7 @@
         countryTimeline: 0
       }
     },
-    
+
 
     methods: {
       getData(data) {
@@ -165,7 +139,7 @@
 
         console.log("homeview data", countryItem)
 
-        this.dataPath = `${countryCode}_agt.json`; 
+        this.dataPath = `${countryCode}_agt.json`;
         console.log(`../data/${this.dataPath}`)
         try {
           const module = await import(`../data/${this.dataPath}`);
@@ -198,7 +172,7 @@
           var actorType = countryData[i]["actor_type"]
 
           var date = countryData[i].date;
-          
+
           var dateParts = date.split("/");
           var agtYear = dateParts[2];
 
@@ -221,7 +195,7 @@
             this.actorTypeLegendList.push(actorType)
           }
         }
-        
+
         // for network, jigsaw rendering
         this.actorTypeLegendListNetwork = this.actorTypeLegendList.slice()
         this.actorTypeLegendListNetwork.unshift("Peace Agreement");
@@ -262,7 +236,7 @@
       this.fetchData(this.$route.params.country);
     },
 
-    
+
 
     // setup() {
 
@@ -320,7 +294,7 @@
     //               ]
     //   var sigColorRange = ["#657585", "#F4A425"]
     //   var agtColor = "#34495E"
-      
+
     //   // for network, jigsaw rendering
     //   var actorTypeLegendListNetwork = actorTypeLegendList.slice()
     //   actorTypeLegendListNetwork.unshift("Peace Agreement");

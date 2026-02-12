@@ -1,5 +1,9 @@
 <template>
     <div class="component-container">
+        <vis-badge
+            class="no-ai-badge"
+            v-bind="BADGES.noAIInvolved"
+        />
         <div class="title">
             <h3 class="top-sub">Overview</h3>
             <h3>Country Involvement</h3>
@@ -31,11 +35,26 @@
 </template>
 
 <script>
+    import { BADGES } from '@/badges'
+
     export default {
-        props: ["processNum", "agtNum", "actorNum", "timespan" ]
+        props: ["processNum", "agtNum", "actorNum", "timespan" ],
+        data() {
+            return { BADGES }
+        }
     }
 </script>
 
 
 <style scoped>
+    .component-container {
+        position: relative;
+    }
+
+    .no-ai-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 5;
+    }
 </style>

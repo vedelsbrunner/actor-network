@@ -2,8 +2,16 @@
     <hr />
     <div class='process-wrapper'>
         <h2 id="processTitle">{{ this.title }}</h2>
-        <p>Description placeholder for peace process</p>
-        <p>Interact with charts: <b>Hover</b> nodes for more information. <b>Click</b> to show related nodes. Use buttons to expand to full views for more information.</p>
+        <div class="process-badges">
+            <vis-badge
+                class="process-badge"
+                v-bind="BADGES.linkedAcrossDevices"
+            />
+            <vis-badge
+                class="process-badge"
+                v-bind="BADGES.interactiveNodesMono"
+            />
+        </div>
     </div>
 
     <div class="parent">
@@ -60,48 +68,22 @@
             <div class="downloadBadge">
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Open Data"
-                    description="Open data for this chart."
-                    actionIcon="Confirmation"
-                    actionText="Click for details"
-                    color="rgb(46, 125, 50)"
-                    icon="Confirmation"
+                    v-bind="BADGES.openDataMini"
                     @click="openOpenDataTodo('Network')"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Download PNG"
-                    description="Download the network view as a PNG image."
-                    actionIcon="Download"
-                    actionText="Click to download"
-                    color="rgb(2, 136, 209)"
-                    icon="Download"
+                    v-bind="BADGES.interactiveNodesMini"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    v-bind="BADGES.downloadPngNetwork"
                     @click="exportNetwork()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Expand"
-                    description="Open the network view in full screen."
-                    actionIcon="Expand"
-                    actionText="Click to expand"
-                    color="rgb(2, 136, 209)"
-                    icon="Expand"
+                    v-bind="BADGES.expandMini"
                     @click="clickNetwork()"
-                />
-                <vis-badge
-                    class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Info"
-                    description="Network: Hover nodes for more information. Click a node to show related nodes."
-                    color="rgb(2, 136, 209)"
-                    icon="Interactive"
                 />
             </div>
             <el-dialog
@@ -142,48 +124,22 @@
             <div class="downloadBadge">
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Open Data"
-                    description="Open data for this chart."
-                    actionIcon="Confirmation"
-                    actionText="Click for details"
-                    color="rgb(46, 125, 50)"
-                    icon="Confirmation"
+                    v-bind="BADGES.openDataMini"
                     @click="openOpenDataTodo('List')"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Download PNG"
-                    description="Download the list view as a PNG image."
-                    actionIcon="Download"
-                    actionText="Click to download"
-                    color="rgb(2, 136, 209)"
-                    icon="Download"
+                    v-bind="BADGES.interactiveNodesMini"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    v-bind="BADGES.downloadPngList"
                     @click="exportList()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Expand"
-                    description="Open the list view in full screen."
-                    actionIcon="Expand"
-                    actionText="Click to expand"
-                    color="rgb(2, 136, 209)"
-                    icon="Expand"
+                    v-bind="BADGES.expandMini"
                     @click="clickList()"
-                />
-                <vis-badge
-                    class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Info"
-                    description="List: Scroll to browse agreements and actors. Hover items for details."
-                    color="rgb(2, 136, 209)"
-                    icon="Interactive"
                 />
             </div>
 
@@ -222,48 +178,22 @@
             <div class="downloadBadge">
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Open Data"
-                    description="Open data for this chart."
-                    actionIcon="Confirmation"
-                    actionText="Click for details"
-                    color="rgb(46, 125, 50)"
-                    icon="Confirmation"
+                    v-bind="BADGES.openDataMini"
                     @click="openOpenDataTodo('Jigsaw')"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Download PNG"
-                    description="Download the jigsaw view as a PNG image."
-                    actionIcon="Download"
-                    actionText="Click to download"
-                    color="rgb(2, 136, 209)"
-                    icon="Download"
+                    v-bind="BADGES.interactiveNodesMini"
+                />
+                <vis-badge
+                    class="downloadBadgeInner"
+                    v-bind="BADGES.downloadPngJigsaw"
                     @click="exportJigsaw()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Expand"
-                    description="Open the jigsaw view in full screen."
-                    actionIcon="Expand"
-                    actionText="Click to expand"
-                    color="rgb(2, 136, 209)"
-                    icon="Expand"
+                    v-bind="BADGES.expandMini"
                     @click="clickJigsaw()"
-                />
-                <vis-badge
-                    class="downloadBadgeInner"
-                    type="mini"
-                    variant="filled"
-                    label="Info"
-                    description="Jigsaw: Scroll to explore. Hover items for details."
-                    color="rgb(2, 136, 209)"
-                    icon="Interactive"
                 />
             </div>
 
@@ -296,6 +226,7 @@
 import legends from '@/components/legends.vue'
 import * as svg from 'save-svg-as-png'
 import { ElMessageBox } from 'element-plus'
+import { BADGES } from '@/badges'
 
 import network from '../components/network.vue'
 import jigsaw from '../components/jigsaw.vue'
@@ -319,7 +250,8 @@ export default {
             dialogVisible: false,
             matrixVisible:false,
             jigsawVisible: false,
-            listVisible: false
+            listVisible: false,
+            BADGES
         }
     },
 
@@ -387,6 +319,19 @@ export default {
 </script>
 
 <style scoped>
+    .process-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin: 8px 0 4px 0;
+    }
+
+    .process-badge {
+        cursor: default;
+        user-select: none;
+    }
+
     .network,
     .list,
     .jigsaw {
