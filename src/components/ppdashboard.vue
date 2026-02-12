@@ -16,8 +16,11 @@
 
     <div class="parent">
         <div class="div1">
+            <vis-badge
+                class="key-metrics-badge"
+                v-bind="BADGES.keyMetricsRound"
+            />
             <div class="title">
-                <h3 class="top-sub">Key Metrics</h3>
                 <h3>Summary</h3>
             </div>
             <div class="title">
@@ -69,7 +72,7 @@
                 <vis-badge
                     class="downloadBadgeInner"
                     v-bind="BADGES.openDataMini"
-                    @click="openOpenDataTodo('Network')"
+                    @click="openOpenDataSearch()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
@@ -125,7 +128,7 @@
                 <vis-badge
                     class="downloadBadgeInner"
                     v-bind="BADGES.openDataMini"
-                    @click="openOpenDataTodo('List')"
+                    @click="openOpenDataSearch()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
@@ -179,7 +182,7 @@
                 <vis-badge
                     class="downloadBadgeInner"
                     v-bind="BADGES.openDataMini"
-                    @click="openOpenDataTodo('Jigsaw')"
+                    @click="openOpenDataSearch()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
@@ -225,7 +228,6 @@
 <script>
 import legends from '@/components/legends.vue'
 import * as svg from 'save-svg-as-png'
-import { ElMessageBox } from 'element-plus'
 import { BADGES } from '@/badges'
 
 import network from '../components/network.vue'
@@ -256,6 +258,14 @@ export default {
     },
 
     methods: {
+        openOpenDataSearch() {
+            window.open(
+                'https://www.peaceagreements.org/agreements/search/?search_type=basic-search&show_timeline=0&match_any_issues=True',
+                '_blank',
+                'noopener,noreferrer'
+            )
+        },
+
         clickNetwork() {
             this.dialogVisible = true
             this.$nextTick(() => {
@@ -287,13 +297,6 @@ export default {
 
         exportJigsaw() {
             svg.saveSvgAsPng(document.querySelector('.jigsaw svg'), "jigsaw.png");
-        }
-        ,
-
-        openOpenDataTodo(where) {
-            ElMessageBox.alert(`TODO: Open Data action for ${where}.`, 'Open Data', {
-                confirmButtonText: 'OK'
-            })
         }
     },
 
@@ -330,6 +333,17 @@ export default {
     .process-badge {
         cursor: default;
         user-select: none;
+    }
+
+    .div1 {
+        position: relative;
+    }
+
+    .key-metrics-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 5;
     }
 
     .network,

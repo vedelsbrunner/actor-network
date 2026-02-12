@@ -6,15 +6,17 @@
         <vis-badge
           class="title-badge"
           v-bind="BADGES.backgroundReading"
+          @click="openBackgroundReading()"
         />
         <vis-badge
           class="title-badge"
           v-bind="BADGES.openDataTitle"
-          @click="downloadData()"
+          @click="openOpenDataSearch()"
         />
         <vis-badge
           class="title-badge"
           v-bind="BADGES.missingData"
+          @click="openOpenDataSearch()"
         />
         <vis-badge
           class="title-badge"
@@ -34,7 +36,6 @@
 </template>
 
 <script>
-    import { ElMessageBox } from 'element-plus';
     import { BADGES } from '@/badges'
 
     export default {
@@ -44,10 +45,20 @@
         },
 
         methods: {
-            downloadData() {
-                ElMessageBox.alert(`TODO: download data`, 'Open Data', {
-                    confirmButtonText: 'OK'
-                })
+            openBackgroundReading() {
+                window.open(
+                    'https://www.peaceagreements.org/cms/documents/4196/PA_X_codebook_v9.pdf',
+                    '_blank',
+                    'noopener,noreferrer'
+                )
+            },
+
+            openOpenDataSearch() {
+                window.open(
+                    'https://www.peaceagreements.org/agreements/search/?search_type=basic-search&show_timeline=0&match_any_issues=True',
+                    '_blank',
+                    'noopener,noreferrer'
+                )
             }
         }
     }

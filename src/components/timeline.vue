@@ -14,7 +14,7 @@
                 <vis-badge
                     class="downloadBadgeInner"
                     v-bind="BADGES.openDataMini"
-                    @click="openOpenDataTodo()"
+                    @click="openOpenDataSearch()"
                 />
                 <vis-badge
                     class="downloadBadgeInner"
@@ -35,7 +35,6 @@
 <script>
 import * as svg from 'save-svg-as-png';
 import * as d3 from "d3";
-import { ElMessageBox } from 'element-plus';
 import { BADGES } from '@/badges'
 
 export default ({
@@ -55,10 +54,12 @@ export default ({
             svg.saveSvgAsPng(document.querySelector('.timeline svg'), "timeline.png");
         },
 
-        openOpenDataTodo() {
-            ElMessageBox.alert(`TODO: Open Data action for Timeline.`, 'Open Data', {
-                confirmButtonText: 'OK'
-            })
+        openOpenDataSearch() {
+            window.open(
+                'https://www.peaceagreements.org/agreements/search/?search_type=basic-search&show_timeline=0&match_any_issues=True',
+                '_blank',
+                'noopener,noreferrer'
+            )
         },
 
         renderTimelineLegend() {

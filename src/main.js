@@ -6,16 +6,17 @@ import App from './App.vue'
 import  router  from "./router";
 
 async function registerVisBadge() {
-  // Prefer loading the web component bundle from a public URL (e.g. GitHub Pages).
-  // Set at build time: VUE_APP_VIS_BADGE_WC_URL="https://<you>.github.io/<repo>/vis-badge.js"
-  //
-  // Fallback: serve a local copy from `public/vis-badge.js`.
   const configuredUrl = process.env.VUE_APP_VIS_BADGE_WC_URL
   const localUrl = `${process.env.BASE_URL}vis-badge.js`
 
   const urlsToTry = []
-  if (configuredUrl) urlsToTry.push(configuredUrl)
-  if (!configuredUrl || configuredUrl !== localUrl) urlsToTry.push(localUrl)
+  if (process.env.NODE_ENV === 'development') {
+    urlsToTry.push(localUrl)
+    if (configuredUrl && configuredUrl !== localUrl) urlsToTry.push(configuredUrl)
+  } else {
+    if (configuredUrl) urlsToTry.push(configuredUrl)
+    if (!configuredUrl || configuredUrl !== localUrl) urlsToTry.push(localUrl)
+  }
 
   let lastError
   for (const url of urlsToTry) {

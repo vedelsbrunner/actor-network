@@ -11,7 +11,9 @@ export const BADGES = {
     type: 'mono',
     variant: 'filled',
     label: 'Background Reading Available',
-    description: 'Additional background reading is available for this dashboard.',
+    description: 'Additional background reading is available for this project. Read more about methodology, the data creation process and the team by clicking',
+    actionIcon: 'ExternalLink',
+    actionText: 'click for more information',
     color: 'rgb(46, 125, 50)',
     icon: 'Confirmation'
   },
@@ -20,9 +22,9 @@ export const BADGES = {
     type: 'mono',
     variant: 'filled',
     label: 'Open Data',
-    description: 'Download the underlying open data.',
-    actionIcon: 'Download',
-    actionText: 'Download data',
+    description: 'The dataset used is open and available for download. Click to search the most expansive collection of peace agreements data in the world and download what you are interested in.',
+    actionIcon: 'ExternalLink',
+    actionText: 'open database',
     color: 'rgb(46, 125, 50)',
     icon: 'Confirmation'
   },
@@ -31,7 +33,9 @@ export const BADGES = {
     type: 'mono',
     variant: 'filled',
     label: 'Missing Data',
-    description: 'Some data may be missing or incomplete.',
+    description: 'PA-X is currently the most expansive collection of peace agreements data in the world. Now in Version 9, PA-X contains 2,144 peace agreements, found in more than 170 peace processes between 1990 and 2024. Nevertheless we acknowledge that our database is not complete due to the complexity of collecting such peace agreements.',
+    actionIcon: 'ExternalLink',
+    actionText: 'open database',
     color: 'rgb(237, 108, 2)',
     icon: 'Warning'
   },
@@ -40,7 +44,7 @@ export const BADGES = {
     type: 'mono',
     variant: 'filled',
     label: 'Data Filtered',
-    description: 'The visualisations can be filtered by signatory (top dropdown) and peace process (process selector).',
+    description: "You don't see the whole dataset. The data is filtered by signatory (top dropdown) and peace process (process selector). You can change this filters.",
     color: 'rgb(2, 136, 209)',
     icon: 'Info'
   },
@@ -49,9 +53,9 @@ export const BADGES = {
     type: 'mini',
     variant: 'filled',
     label: 'Open Data',
-    description: 'Open data for this chart.',
-    actionIcon: 'Download',
-    actionText: 'Download data',
+    description: 'The dataset used is open and available for download. Click to search the most expansive collection of peace agreements data in the world and download what you are interested in.',
+    actionIcon: 'ExternalLink',
+    actionText: 'open database',
     color: 'rgb(46, 125, 50)',
     icon: 'Confirmation'
   },
@@ -59,7 +63,7 @@ export const BADGES = {
   downloadPngTimeline: {
     type: 'mini',
     variant: 'filled',
-    label: 'Download PNG',
+    label: 'Download',
     description: 'Download the timeline chart as a PNG image.',
     actionIcon: 'Download',
     actionText: 'Click to download',
@@ -70,8 +74,9 @@ export const BADGES = {
   infoTimeline: {
     type: 'mini',
     variant: 'filled',
-    label: 'Info',
-    description: 'Timeline: Hover to see agreement name.',
+    label: 'Interactive Nodes',
+    description:
+      'Hover nodes for more information. Click nodes to highlight related nodes and explore connections. Use the Expand badges on each chart to open full views.',
     color: 'rgb(2, 136, 209)',
     icon: 'Interactive'
   },
@@ -81,7 +86,7 @@ export const BADGES = {
     variant: 'solid',
     size: '54',
     label: 'No AI Invovled',
-    description: 'No AI tools were involved in producing this dashboard.',
+    description: 'No AI tools were involved in producing this dashboard. Made with love by humans.',
     color: 'rgb(46, 125, 50)',
     icon: 'badge-check'
   },
@@ -89,8 +94,8 @@ export const BADGES = {
   linkedAcrossDevices: {
     type: 'mono',
     variant: 'filled',
-    label: 'Interactions Linked Across Multiple Devices',
-    description: 'Interactions are linked across multiple devices, so behaviour may reflect combined activity.',
+    label: 'Interactions Linked Across Multiple Views',
+    description: 'Interactions are linked across multiple views. If you interact with one chart (e.g. by clicking on a node), the other views will also be updated according to your selection.',
     color: 'rgb(2, 136, 209)',
     icon: 'Interactive'
   },
@@ -113,6 +118,17 @@ export const BADGES = {
       'Hover nodes for more information. Click nodes to highlight related nodes and explore connections. Use the Expand badges on each chart to open full views.',
     color: 'rgb(2, 136, 209)',
     icon: 'Interactive'
+  },
+
+  keyMetricsRound: {
+    type: 'round',
+    variant: 'solid',
+    size: '54',
+    label: 'Key Metrics',
+    description:
+      "Your quick snapshot of this peace process: how many agreements it includes, how many other actors are involved, and the years it spans. Use the Peace Process selector to explore and compare different processes.",
+    color: 'rgb(2, 136, 209)',
+    icon: 'Info'
   },
 
   downloadPngNetwork: {
