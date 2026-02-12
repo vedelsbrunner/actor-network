@@ -6,7 +6,7 @@ import App from './App.vue'
 import  router  from "./router";
 
 async function registerVisBadge() {
-  const configuredUrl = process.env.VUE_APP_VIS_BADGE_WC_URL
+  const configuredUrl = 'https://cdn.jsdelivr.net/gh/vedelsbrunner/badge-lib@main/dist-wc/vis-badge.js'
   const localUrl = `${process.env.BASE_URL}vis-badge.js`
 
   const urlsToTry = []
