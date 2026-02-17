@@ -30,8 +30,10 @@ jobs:
 
       - name: Build (GH Pages)
         env:
-          # Hosted web component bundle from badge-lib GitHub Pages:
-          VUE_APP_VIS_BADGE_WC_URL: "https://vedelsbrunner.github.io/badge-lib/dist-wc/vis-badge.js"
+          # badge-lib bundle source (set VUE_APP_VIS_BADGE_WC_FILE to pin an immutable file)
+          VUE_APP_VIS_BADGE_WC_BASE_URL: "https://vedelsbrunner.github.io/badge-lib/dist-wc"
+          VUE_APP_VIS_BADGE_WC_FILE: ""
+          VUE_APP_VIS_BADGE_ALWAYS_LIVE: "true"
         run: npm run build
 
       - name: Sanity check Pages output

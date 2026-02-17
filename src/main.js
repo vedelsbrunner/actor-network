@@ -5,17 +5,29 @@ import App from './App.vue'
 
 import  router  from "./router";
 
+function addCacheBust(url) {
+  const sep = url.includes('?') ? '&' : '?'
+  return `${url}${sep}v=${Date.now()}`
+}
+
 async function registerVisBadge() {
-  const configuredUrl = 'https://cdn.jsdelivr.net/gh/vedelsbrunner/badge-lib@main/dist-wc/vis-badge.js'
+  const baseUrl = (process.env.VUE_APP_VIS_BADGE_WC_BASE_URL || 'https://vedelsbrunner.github.io/badge-lib/dist-wc').replace(/\/+$/, '')
+  const pinnedFile = (process.env.VUE_APP_VIS_BADGE_WC_FILE || '').trim()
+  const alwaysLive = process.env.VUE_APP_VIS_BADGE_ALWAYS_LIVE === 'true'
   const localUrl = `${process.env.BASE_URL}vis-badge.js`
+  const pinnedUrl = pinnedFile ? `${baseUrl}/${pinnedFile}` : ''
+  const latestUrl = `${baseUrl}/vis-badge.js`
 
   const urlsToTry = []
   if (process.env.NODE_ENV === 'development') {
+    urlsToTry.push(addCacheBust(localUrl))
+    if (pinnedUrl) urlsToTry.push(addCacheBust(pinnedUrl))
+    urlsToTry.push(addCacheBust(latestUrl))
     urlsToTry.push(localUrl)
-    if (configuredUrl && configuredUrl !== localUrl) urlsToTry.push(configuredUrl)
   } else {
-    if (configuredUrl) urlsToTry.push(configuredUrl)
-    if (!configuredUrl || configuredUrl !== localUrl) urlsToTry.push(localUrl)
+    if (pinnedUrl) urlsToTry.push(pinnedUrl)
+    urlsToTry.push(alwaysLive ? addCacheBust(latestUrl) : latestUrl)
+    urlsToTry.push(localUrl)
   }
 
   let lastError
@@ -35,7 +47,7 @@ async function registerVisBadge() {
       `Tried:\n` +
       `- ${urlsToTry.join('\n- ')}\n` +
       `Fix:\n` +
-      `- Set VUE_APP_VIS_BADGE_WC_URL to a valid public URL, or\n` +
+      `- Set VUE_APP_VIS_BADGE_WC_BASE_URL and optional VUE_APP_VIS_BADGE_WC_FILE, or\n` +
       `- Add public/vis-badge.js so ${localUrl} exists.\n`,
     lastError
   )

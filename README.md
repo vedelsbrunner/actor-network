@@ -8,10 +8,15 @@
 
 ## vis-badge web component (local dev)
 The `<vis-badge>` element is provided by the `badge-lib` project as an ES module bundle (`vis-badge.js`).
-On GitHub Pages deployments, the CI workflow sets `VUE_APP_VIS_BADGE_WC_URL` so the app loads the hosted bundle from `badge-lib` GitHub Pages.
-For local development, this repo sets a default in `.env.development` so `npm run serve` also loads the hosted bundle.
-If you want to override the URL on your machine, create `.env.local` and set `VUE_APP_VIS_BADGE_WC_URL=...` (this file is gitignored).
-If the app cannot import the bundle, it will log the attempted URLs and you can either fix the environment variable or provide a local `public/vis-badge.js` fallback.
+This repo loads badges with a fallback chain:
+1. local `public/vis-badge.js` (cache-busted in development),
+2. optional pinned hosted file (`VUE_APP_VIS_BADGE_WC_FILE`),
+3. hosted latest file from `VUE_APP_VIS_BADGE_WC_BASE_URL`.
+For local overrides, create `.env.local` (gitignored) and set:
+- `VUE_APP_VIS_BADGE_WC_BASE_URL=...`
+- `VUE_APP_VIS_BADGE_WC_FILE=vis-badge.vX.Y.Z.hash.js` (optional pin)
+- `VUE_APP_VIS_BADGE_ALWAYS_LIVE=true|false`
+If the app cannot import the bundle, it logs all attempted URLs.
 
 
 ## Explanation
